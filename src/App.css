@@ -1,0 +1,117 @@
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  margin: 0;
+  width: 100%;
+  min-height: 100%;
+}
+
+body {
+  background: #030712;
+  color: #fff;
+  overflow-x: hidden;
+  font-family: Arial, sans-serif;
+}
+
+.website {
+  position: relative;
+  min-height: 200vh;
+}
+
+.fixed-canvas {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  height: 100dvh;
+  pointer-events: none;
+}
+
+.underwater-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+
+  background:
+    radial-gradient(
+      ellipse at 60% 30%,
+      rgba(33, 104, 164, 0.15),
+      transparent 60%
+    ),
+    linear-gradient(
+      180deg,
+      rgba(1, 13, 35, 0.08),
+      rgba(3, 27, 60, 0.34)
+    );
+
+  transition: opacity 0.15s linear;
+}
+
+.website-content {
+  position: relative;
+  z-index: 2;
+  pointer-events: none;
+}
+
+.page-section {
+  min-height: 100dvh;
+  position: relative;
+}
+
+.scroll-hint {
+  position: absolute;
+  bottom: 32px;
+  left: 50%;
+  transform: translateX(-50%);
+  font-size: 11px;
+  letter-spacing: 3px;
+  white-space: nowrap;
+}
+
+.underwater-section {
+  display: flex;
+  align-items: center;
+  padding: 8%;
+}
+
+.section-copy {
+  width: min(430px, 90%);
+  padding: 22px 0;
+  pointer-events: auto;
+}
+
+.section-copy span {
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.section-copy h1 {
+  font-size: clamp(42px, 5.5vw, 78px);
+  letter-spacing: -0.055em;
+  line-height: 1.03;
+  margin: 24px 0;
+}
+
+.section-copy p {
+  max-width: 370px;
+  color: #b3c7df;
+  line-height: 1.8;
+  font-size: 15px;
+}
+
+@media (max-width: 700px) {
+  .underwater-section {
+    align-items: flex-start;
+    padding: 15vh 7%;
+  }
+
+  .section-copy h1 {
+    font-size: clamp(38px, 11vw, 60px);
+  }
+}
