@@ -18,18 +18,26 @@ body {
   font-family: Arial, sans-serif;
 }
 
+/* MAIN WEBSITE */
+
 .website {
   position: relative;
-  min-height: 200vh;
+  min-height: 380vh;
 }
+
+/* FIXED THREE.JS CANVAS */
 
 .fixed-canvas {
   position: fixed;
   inset: 0;
   z-index: 0;
+  width: 100%;
   height: 100dvh;
+  overflow: hidden;
   pointer-events: none;
 }
+
+/* UNDERWATER ATMOSPHERE */
 
 .underwater-atmosphere {
   position: fixed;
@@ -52,6 +60,8 @@ body {
   transition: opacity 0.15s linear;
 }
 
+/* CONTENT */
+
 .website-content {
   position: relative;
   z-index: 2;
@@ -61,6 +71,12 @@ body {
 .page-section {
   min-height: 100dvh;
   position: relative;
+}
+
+/* PHASE 01: HERO */
+
+.hero-section {
+  min-height: 100dvh;
 }
 
 .scroll-hint {
@@ -73,10 +89,13 @@ body {
   white-space: nowrap;
 }
 
+/* PHASE 02–03: UNDERWATER */
+
 .underwater-section {
   display: flex;
   align-items: center;
   padding: 8%;
+  min-height: 100dvh;
 }
 
 .section-copy {
@@ -105,6 +124,127 @@ body {
   font-size: 15px;
 }
 
+/* PHASE 04: CREATIVE INTRODUCTION */
+
+.next-section {
+  min-height: 120dvh;
+}
+
+/*
+  Sticky content stays in view while scrolling
+  through the next section.
+*/
+
+.intro-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+
+  display: flex;
+  align-items: center;
+
+  padding: 7%;
+}
+
+/* Text stays on the left */
+
+.creative-intro {
+  position: relative;
+  width: min(570px, 49%);
+
+  will-change: opacity, transform;
+
+  /*
+    Subtle shadow increases readability
+    without adding an actual background card.
+  */
+  filter: drop-shadow(
+    0 8px 28px rgba(0, 8, 22, 0.45)
+  );
+}
+
+/* Eyebrow */
+
+.intro-eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 13px;
+
+  margin-bottom: 30px;
+
+  color: #7ed0ff;
+
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 3px;
+}
+
+.intro-line {
+  display: block;
+  width: 32px;
+  height: 1px;
+  background: #7ed0ff;
+}
+
+/* Main typography */
+
+.intro-title {
+  margin: 0;
+
+  font-size: clamp(44px, 5.3vw, 84px);
+  font-weight: 700;
+
+  line-height: 1.06;
+  letter-spacing: -0.065em;
+
+  color: #f7fbff;
+}
+
+/* Only one word gets the energy-blue accent */
+
+.intro-title span {
+  color: #79cfff;
+}
+
+/* Description */
+
+.intro-description {
+  max-width: 395px;
+
+  margin: 28px 0 0;
+
+  color: #b3c7df;
+  font-size: 15px;
+  line-height: 1.9;
+}
+
+/* Footer labels */
+
+.intro-footer {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 14px;
+
+  margin-top: 38px;
+
+  color: #86a5bf;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 2px;
+}
+
+.intro-dot {
+  width: 4px;
+  height: 4px;
+  border-radius: 50%;
+
+  background: #56b9ec;
+  opacity: 0.8;
+}
+
+/* MOBILE */
+
 @media (max-width: 700px) {
   .underwater-section {
     align-items: flex-start;
@@ -113,5 +253,769 @@ body {
 
   .section-copy h1 {
     font-size: clamp(38px, 11vw, 60px);
+  }
+
+  .next-section {
+    min-height: 150dvh;
+  }
+
+  /*
+    Smaller text block reduces overlap
+    with the existing 3D model.
+  */
+
+  .intro-sticky {
+    align-items: flex-start;
+    padding: 12vh 7% 0;
+  }
+
+  .creative-intro {
+    width: 100%;
+    max-width: 390px;
+  }
+
+  .intro-eyebrow {
+    font-size: 9px;
+    letter-spacing: 2px;
+    margin-bottom: 23px;
+  }
+
+  .intro-title {
+    font-size: clamp(39px, 10vw, 58px);
+    line-height: 1.08;
+  }
+
+  .intro-description {
+    max-width: 290px;
+    font-size: 13px;
+    line-height: 1.75;
+    margin-top: 20px;
+  }
+
+  .intro-footer {
+    gap: 9px;
+    margin-top: 27px;
+    font-size: 8px;
+    letter-spacing: 1.2px;
+  }
+}
+
+/* SMALL SCREENS */
+
+@media (max-width: 380px) {
+  .intro-title {
+    font-size: 36px;
+  }
+
+  .intro-description {
+    max-width: 260px;
+  }
+}
+
+/* ACCESSIBILITY */
+
+@media (prefers-reduced-motion: reduce) {
+  .creative-intro {
+    will-change: auto;
+  }
+}
+
+
+/* =====================================
+   PHASE 05 — SKILLS REVEAL
+===================================== */
+
+.skills-section {
+  min-height: 100dvh;
+}
+
+.skills-content {
+  width: min(650px, 55%);
+  position: relative;
+}
+
+.skills-header > span {
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.skills-header h2 {
+  margin: 24px 0;
+  font-size: clamp(44px, 5vw, 76px);
+  letter-spacing: -0.06em;
+  line-height: 1.05;
+}
+
+.skills-header h2 span {
+  color: #79cfff;
+}
+
+.skills-header p {
+  color: #b3c7df;
+  font-size: 14px;
+  line-height: 1.8;
+  max-width: 400px;
+}
+
+.skills-list {
+  margin-top: 48px;
+  border-top: 1px solid rgba(126, 208, 255, 0.22);
+}
+
+.skill-item {
+  display: flex;
+  align-items: center;
+  gap: 18px;
+  padding: 22px 0;
+  border-bottom: 1px solid rgba(126, 208, 255, 0.22);
+  transition: padding-left 0.3s ease;
+}
+
+.skill-item > span {
+  color: #7ed0ff;
+  font-size: 11px;
+}
+
+.skill-item > span:last-child {
+  margin-left: auto;
+  font-size: 18px;
+}
+
+.skill-item h3 {
+  margin: 0;
+  font-size: clamp(17px, 2vw, 26px);
+  font-weight: 500;
+  letter-spacing: -0.03em;
+}
+
+.skill-item:hover {
+  padding-left: 12px;
+}
+
+/* MOBILE */
+
+@media (max-width: 700px) {
+  .skills-section {
+    min-height: 110dvh;
+    padding: 12vh 7%;
+    align-items: flex-start;
+  }
+
+  .skills-content {
+    width: 100%;
+  }
+
+  .skills-header h2 {
+    font-size: clamp(40px, 11vw, 60px);
+  }
+
+  .skill-item {
+    padding: 19px 0;
+  }
+
+  .skill-item h3 {
+    font-size: 17px;
+  }
+}
+
+/* ===================================
+   PHASE 06 — ENERGY BUILDUP
+=================================== */
+
+.buildup-section {
+  position: relative;
+  min-height: 200dvh;
+  background: transparent;
+}
+
+.buildup-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+
+  padding: 9vh 7% 0;
+}
+
+.buildup-content {
+  width: 100%;
+  max-width: 760px;
+  text-align: center;
+}
+
+.buildup-label {
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.buildup-content h2 {
+  margin: 22px 0;
+
+  color: #f5fbff;
+  font-size: clamp(38px, 5.5vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+.buildup-content h2 span {
+  color: #79cfff;
+}
+
+.buildup-content p {
+  margin: 0 auto;
+  max-width: 400px;
+
+  color: #b3c7df;
+  font-size: 14px;
+  line-height: 1.7;
+}
+
+@media (max-width: 700px) {
+  .buildup-sticky {
+    padding: 12vh 7% 0;
+  }
+
+  .buildup-content h2 {
+    font-size: clamp(36px, 9vw, 55px);
+  }
+
+  .buildup-content p {
+    font-size: 12px;
+  }
+}
+
+
+/* FINAL SCROLL TIMELINE — PHASES 04–07 */
+
+.next-section {
+  min-height: 125dvh;
+}
+
+.skills-section {
+  min-height: 110dvh;
+}
+
+.buildup-section {
+  position: relative;
+  min-height: 145dvh;
+  background: transparent;
+}
+
+.buildup-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  padding: 8vh 7% 0;
+}
+
+.buildup-content {
+  width: 100%;
+  max-width: 760px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.buildup-content h2 {
+  font-size: clamp(38px, 5.5vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.06em;
+}
+
+.explosion-section {
+  position: relative;
+  min-height: 180dvh;
+  background: transparent;
+}
+
+.explosion-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+  padding: 8vh 7% 0;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+.explosion-copy {
+  width: 100%;
+  max-width: 800px;
+  text-align: center;
+  pointer-events: none;
+}
+
+.explosion-copy > span {
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.explosion-copy h2 {
+  margin: 20px 0;
+  color: #f7fbff;
+  font-size: clamp(38px, 5vw, 72px);
+  line-height: 1.1;
+  letter-spacing: -0.06em;
+}
+
+.explosion-copy p {
+  color: #b3c7df;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+@media (max-width: 700px) {
+  .next-section {
+    min-height: 120dvh;
+  }
+
+  .skills-section {
+    min-height: 110dvh;
+  }
+
+  .buildup-section {
+    min-height: 140dvh;
+  }
+
+  .explosion-section {
+    min-height: 170dvh;
+  }
+
+  .explosion-sticky,
+  .buildup-sticky {
+    padding-top: 10vh;
+  }
+
+  .explosion-copy h2 {
+    font-size: clamp(34px, 9vw, 52px);
+  }
+
+  .explosion-copy p {
+    font-size: 13px;
+  }
+}
+
+
+/* =========================================
+   SKILLS SECTION — SPACING & ALIGNMENT FIX
+   ========================================= */
+
+.skills-section {
+  position: relative;
+  min-height: 110dvh;
+  width: 100%;
+  padding: 0 7%;
+  display: flex;
+  align-items: center;
+}
+
+.skills-content {
+  width: 100%;
+  max-width: 1280px;
+  margin: 0 auto;
+
+  padding-top: 8vh;
+  padding-bottom: 10vh;
+}
+
+.skills-header {
+  width: min(100%, 580px);
+  margin-bottom: 48px;
+}
+
+.skills-header > span {
+  display: block;
+  margin-bottom: 22px;
+}
+
+.skills-header h2 {
+  margin: 0 0 28px;
+  font-size: clamp(42px, 5.5vw, 78px);
+  line-height: 1.05;
+  letter-spacing: -0.055em;
+}
+
+.skills-header p {
+  max-width: 420px;
+  margin: 0;
+  color: #b3c7df;
+  font-size: 15px;
+  line-height: 1.8;
+}
+
+/* Make rows feel spacious without stretching
+   into the Energy Rock's visual area. */
+
+.skills-list {
+  width: min(100%, 580px);
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 36px minmax(0, 1fr) 22px;
+  align-items: center;
+  column-gap: 10px;
+
+  min-height: 82px;
+  padding: 20px 0;
+  border-top: 1px solid rgba(126, 208, 255, 0.2);
+}
+
+.skill-item:last-child {
+  border-bottom: 1px solid rgba(126, 208, 255, 0.2);
+}
+
+.skill-item h3 {
+  margin: 0;
+  font-size: clamp(17px, 1.7vw, 24px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.skill-item > span:first-child {
+  color: #7ed0ff;
+  font-size: 10px;
+}
+
+.skill-item > span:last-child {
+  justify-self: end;
+  color: #7ed0ff;
+  font-size: 20px;
+}
+
+/* =========================================
+   RESPONSIVE
+   ========================================= */
+
+@media (max-width: 900px) {
+  .skills-section {
+    padding-left: 6%;
+    padding-right: 6%;
+  }
+
+  .skills-header,
+  .skills-list {
+    width: min(100%, 500px);
+  }
+}
+
+@media (max-width: 700px) {
+  .skills-section {
+    min-height: 115dvh;
+    padding: 10vh 7%;
+    align-items: flex-start;
+  }
+
+  .skills-content {
+    padding: 0;
+  }
+
+  .skills-header {
+    margin-bottom: 32px;
+  }
+
+  .skills-header h2 {
+    font-size: clamp(38px, 10vw, 58px);
+  }
+
+  .skills-header p {
+    font-size: 14px;
+  }
+
+  .skill-item {
+    grid-template-columns: 26px minmax(0, 1fr) 20px;
+    min-height: 70px;
+    padding: 16px 0;
+  }
+
+  .skill-item h3 {
+    font-size: clamp(15px, 4vw, 19px);
+  }
+}
+
+
+/* =========================================
+   SKILLS — CLEAN FINAL LAYOUT
+   ========================================= */
+
+.skills-section {
+  position: relative;
+  min-height: 110dvh;
+  width: 100%;
+
+  display: flex;
+  align-items: center;
+
+  /* Left content stays away from viewport edge */
+  padding: 8vh 0 10vh clamp(48px, 7vw, 120px);
+}
+
+/* Restrict text to left side only */
+.skills-content {
+  position: relative;
+
+  width: 38%;
+  max-width: 540px;
+  min-width: 0;
+
+  margin: 0;
+  padding: 0;
+}
+
+/* Heading + description */
+.skills-header {
+  width: 100%;
+  margin-bottom: 38px;
+}
+
+.skills-header > span {
+  display: block;
+  margin-bottom: 22px;
+
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.skills-header h2 {
+  margin: 0 0 26px;
+
+  font-size: clamp(42px, 4.5vw, 68px);
+  line-height: 1.06;
+  letter-spacing: -0.055em;
+}
+
+.skills-header h2 span {
+  color: #79cfff;
+}
+
+.skills-header p {
+  max-width: 370px;
+  margin: 0;
+
+  color: #b3c7df;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+/* Keep skills inside same text column */
+.skills-list {
+  width: 100%;
+  margin-top: 42px;
+
+  border-top: 1px solid rgba(126, 208, 255, 0.22);
+}
+
+.skill-item {
+  display: grid;
+  grid-template-columns: 28px minmax(0, 1fr) 20px;
+  align-items: center;
+  gap: 10px;
+
+  min-height: 76px;
+  padding: 18px 0;
+
+  border-top: 0;
+  border-bottom: 1px solid rgba(126, 208, 255, 0.22);
+
+  transition: padding-left 0.3s ease;
+}
+
+.skill-item h3 {
+  margin: 0;
+
+  font-size: clamp(17px, 1.4vw, 22px);
+  font-weight: 400;
+  letter-spacing: -0.025em;
+}
+
+.skill-item > span:first-child {
+  color: #7ed0ff;
+  font-size: 10px;
+}
+
+.skill-item > span:last-child {
+  justify-self: end;
+
+  margin-left: 0;
+  color: #7ed0ff;
+  font-size: 19px;
+}
+
+/* =========================================
+   TABLET
+   ========================================= */
+
+@media (max-width: 1000px) {
+  .skills-section {
+    padding-left: 6%;
+  }
+
+  .skills-content {
+    width: 43%;
+  }
+
+  .skills-header h2 {
+    font-size: clamp(38px, 5vw, 58px);
+  }
+
+  .skill-item h3 {
+    font-size: 16px;
+  }
+}
+
+/* =========================================
+   MOBILE
+   ========================================= */
+
+@media (max-width: 700px) {
+  .skills-section {
+    min-height: 115dvh;
+    padding: 12vh 7% 8vh;
+    align-items: flex-start;
+  }
+
+  .skills-content {
+    width: 100%;
+    max-width: 100%;
+  }
+
+  .skills-header {
+    margin-bottom: 30px;
+  }
+
+  .skills-header h2 {
+    font-size: clamp(38px, 10vw, 58px);
+  }
+
+  .skills-header p {
+    max-width: 290px;
+    font-size: 13px;
+  }
+
+  .skills-list {
+    margin-top: 32px;
+  }
+
+  .skill-item {
+    min-height: 65px;
+    padding: 14px 0;
+  }
+
+  .skill-item h3 {
+    font-size: clamp(15px, 4vw, 19px);
+  }
+}
+
+/* ==========================================
+   SCROLL SEQUENCE — CONTENT SPACING
+   ========================================== */
+
+.next-section {
+  min-height: 150dvh;
+}
+
+.skills-section {
+  min-height: 140dvh;
+}
+
+.buildup-section {
+  min-height: 180dvh;
+}
+
+.explosion-section {
+  min-height: 180dvh;
+}
+
+/* Keep transitions smooth */
+.creative-intro,
+.skills-content,
+.buildup-content,
+.explosion-copy {
+  will-change: opacity, transform;
+}
+
+/* Prevent a hidden section from catching clicks */
+.skills-content[style*="visibility: hidden"],
+.buildup-content[style*="visibility: hidden"],
+.explosion-copy[style*="visibility: hidden"] {
+  pointer-events: none;
+}
+
+/* Let the visible skills rows receive hover and keyboard input. */
+.skills-content {
+  pointer-events: auto;
+}
+/* =====================================
+   ENERGY BUILDUP — CLEAN CINEMATIC LAYOUT
+   ===================================== */
+
+.buildup-sticky {
+  position: sticky;
+  top: 0;
+  height: 100dvh;
+
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+
+  padding: 18vh 7% 0;
+}
+
+.buildup-content {
+  position: relative;
+  width: min(420px, 38vw);
+  max-width: 420px;
+
+  text-align: left;
+  z-index: 3;
+
+  transition: opacity 0.2s ease;
+}
+
+.buildup-label {
+  color: #7ed0ff;
+  font-size: 11px;
+  letter-spacing: 3px;
+}
+
+.buildup-content h2 {
+  margin: 22px 0 20px;
+
+  font-size: clamp(38px, 4.2vw, 64px);
+  line-height: 1.08;
+  letter-spacing: -0.055em;
+}
+
+.buildup-content h2 span {
+  color: #79cfff;
+}
+
+.buildup-content p {
+  max-width: 340px;
+  color: #b3c7df;
+  font-size: 14px;
+  line-height: 1.8;
+}
+
+@media (max-width: 700px) {
+  .buildup-sticky {
+    padding: 10vh 7% 0;
+  }
+
+  .buildup-content {
+    width: 70%;
+  }
+
+  .buildup-content h2 {
+    font-size: clamp(32px, 8vw, 48px);
   }
 }
