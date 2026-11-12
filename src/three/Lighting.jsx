@@ -2,19 +2,25 @@
 export default function Lighting() {
   return (
     <>
-      <ambientLight intensity={0.9} />
+      <ambientLight intensity={0.55} />
 
       <directionalLight
-        position={[5, 7, 5]}
-        intensity={2.5}
-        color="#b9e5ff"
+        position={[4, 6, 3]}
+        intensity={2.2}
+        color="#e6f2ff"
+        castShadow={false}
+      />
+
+      <directionalLight
+        position={[-3, 2, -4]}
+        intensity={0.85}
+        color="#b6d4f2"
       />
 
       <pointLight
-        position={[-3, 2, 4]}
-        intensity={20}
-        distance={15}
-        color="#48baff"
+        position={[0, 1.5, 2]}
+        intensity={0.55}
+        color="#b9dfff"
       />
     </>
   );

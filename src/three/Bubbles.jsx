@@ -1,3 +1,4 @@
+
 import { useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import * as THREE from "three";
@@ -10,8 +11,10 @@ function rand(seed) {
   return v - Math.floor(v);
 }
 
-export default function Bubbles({ scrollProgress = 0 }) {
-  const instances = useRef();
+export default function Bubbles({
+  scrollProgress = 0,
+}) {
+  const instances = useRef(null);
   const dummy = useMemo(() => new THREE.Object3D(), []);
 
   const bubbles = useMemo(
@@ -19,6 +22,7 @@ export default function Bubbles({ scrollProgress = 0 }) {
       Array.from({ length: COUNT }, (_, i) => {
         const angle = rand(i + 1) * Math.PI * 2;
         const radius = Math.sqrt(rand(i + 20)) * 2.2;
+
         return {
           x: Math.cos(angle) * radius,
           z: Math.sin(angle) * radius * 0.55,
@@ -34,17 +38,10 @@ export default function Bubbles({ scrollProgress = 0 }) {
   useFrame(({ clock }) => {
     if (!instances.current) return;
 
-    // bubbles bahut late start hon
- 
-const start = 0.48;
-const end = 0.65;
+    const enter = THREE.MathUtils.smoothstep(scrollProgress, 0.32, 0.5);
+    const exit = 1 - THREE.MathUtils.smoothstep(scrollProgress, 0.9, 0.99);
 
-const active = THREE.MathUtils.smoothstep(
-  scrollProgress,
-  start,
-  end
-);
-
+    const active = enter * exit;
 
     if (active <= 0.01) {
       instances.current.visible = false;
@@ -59,14 +56,17 @@ const active = THREE.MathUtils.smoothstep(
       const rise = (bubble.base + time * bubble.speed) % 3.5;
 
       dummy.position.set(
-        bubble.x + Math.sin(time * 1.1 + bubble.sway) * 0.12,
-        OCEAN_Y - 3.8 + rise,   // thoda aur niche se start
+        bubble.x +
+          Math.sin(time * 1.1 + bubble.sway) * 0.12,
+        OCEAN_Y - 3.8 + rise,
         bubble.z
       );
 
       const s = bubble.size * active;
+
       dummy.scale.set(s, s * 1.12, s);
       dummy.updateMatrix();
+
       instances.current.setMatrixAt(i, dummy.matrix);
     });
 
@@ -80,6 +80,7 @@ const active = THREE.MathUtils.smoothstep(
       frustumCulled={false}
     >
       <sphereGeometry args={[1, 8, 6]} />
+
       <meshBasicMaterial
         color="#7acfff"
         transparent

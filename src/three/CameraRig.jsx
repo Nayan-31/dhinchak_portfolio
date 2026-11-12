@@ -1,4 +1,3 @@
-
 import { useFrame, useThree } from "@react-three/fiber";
 import * as THREE from "three";
 
@@ -8,41 +7,25 @@ export default function CameraRig({
   const { camera } = useThree();
 
   useFrame((_, delta) => {
-    const p = THREE.MathUtils.clamp(
-      scrollProgress, 0, 1
-    );
-
-    // Camera starts above water.
-    // It follows the dive after the impact.
     const dive = THREE.MathUtils.smoothstep(
-      p, 0.25, 0.9
+      THREE.MathUtils.clamp(scrollProgress, 0, 1),
+      0.04,
+      0.42
     );
-
-    const targetY = THREE.MathUtils.lerp(
-      2.2, -2.3, dive
-    );
-
+    camera.position.x = THREE.MathUtils.damp(camera.position.x, 0, 4, delta);
     camera.position.y = THREE.MathUtils.damp(
       camera.position.y,
-      targetY,
-      3.2,
+      THREE.MathUtils.lerp(3.6, -9.5, dive),
+      3.4,
       delta
     );
-
     camera.position.z = THREE.MathUtils.damp(
       camera.position.z,
-      11.5,
-      3.2,
+      16.5,
+      4,
       delta
     );
-
-    const lookY = THREE.MathUtils.lerp(
-      0.1,
-      -1.6,
-      dive
-    );
-
-    camera.lookAt(0, lookY, 0);
+    camera.lookAt(0, THREE.MathUtils.lerp(2, -7.5, dive), 0);
   });
 
   return null;
