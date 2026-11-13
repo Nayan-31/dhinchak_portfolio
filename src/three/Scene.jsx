@@ -11,12 +11,14 @@ import CameraRig from "./CameraRig";
 import UnderwaterEnvironment from "./UnderwaterEnvironment";
 
 export default function Scene({
+  paused = false,
   scrollProgress = 0,
   buildupProgress = 0,
   explosionProgress = 0,
 }) {
   return (
     <Canvas
+      frameloop={paused ? "never" : "always"}
       camera={{
         position: [0, 2.8, 15.5],
         fov: 48,

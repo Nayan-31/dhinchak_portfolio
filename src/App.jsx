@@ -2,7 +2,8 @@
 import { useEffect, useRef, useState } from "react";
 import Scene from "./three/Scene";
 import BubbleMenu from "./components/BubbleMenu";
-import FlowingMenu from "./components/FlowingMenu";
+import BlobCursor from "./components/BlobCursor";
+import NavigationExperience from "./components/NavigationExperience";
 import "./App.css";
 
 const clamp = (v) => Math.min(1, Math.max(0, v));
@@ -53,6 +54,7 @@ const navigationItems = [
 export default function App() {
   const introSectionRef = useRef(null);
   const introContentRef = useRef(null);
+  const [activePage, setActivePage] = useState(null);
 
   const [scroll, setScroll] = useState({
     dive: 0,
@@ -99,26 +101,11 @@ export default function App() {
         0.78
       );
 
-      // =====================================
-      // 05: SKILLS
-      //
-      // Skills appear ONLY after the entire
-      // introduction content leaves viewport.
-      // =====================================
-
-      const introFullyExited =
-        introContentRect &&
-        introContentRect.bottom <= 0;
-
+      const introFullyExited = introContentRect && introContentRect.bottom <= 0;
       const skillsReveal = introFullyExited
-        ? smoothstep(
-            -introContentRect.bottom / vh,
-            0,
-            0.16
-          )
+        ? smoothstep(-introContentRect.bottom / vh, 0, 0.16)
         : 0;
 
-      // =====================================
       const buildup = smoothstep(page, 0.66, 0.9);
 
       const explosion = smoothstep(page, 0.91, 0.99);
@@ -159,6 +146,22 @@ export default function App() {
     };
   }, []);
 
+  useEffect(() => {
+    const restorePageFromHistory = () => {
+      const matchingItem = navigationItems.find(
+        (item) => item.href === window.location.hash
+      );
+      const page = matchingItem?.label;
+      setActivePage(page && page !== "home" ? page : null);
+      if (!page || page === "home") {
+        window.scrollTo({ top: 0, behavior: "smooth" });
+      }
+    };
+
+    window.addEventListener("popstate", restorePageFromHistory);
+    return () => window.removeEventListener("popstate", restorePageFromHistory);
+  }, []);
+
   const atmosphere = smoothstep(scroll.dive, 0.02, 0.5);
 
   const chargeReveal = smoothstep(
@@ -173,10 +176,23 @@ export default function App() {
     0.35
   );
 
+  const navigateTo = (item) => {
+    if (item.label === "home") {
+      setActivePage(null);
+      window.history.pushState(null, "", item.href);
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      return;
+    }
+
+    setActivePage(item.label);
+    window.history.pushState(null, "", item.href);
+  };
+
   return (
     <main className="website">
       <BubbleMenu
         items={navigationItems}
+        onNavigate={navigateTo}
         menuAriaLabel="Toggle portfolio navigation"
         menuBg="#ffffff"
         menuContentColor="#101820"
@@ -188,6 +204,7 @@ export default function App() {
       {/* EXISTING THREE.JS SCENE */}
       <div className="fixed-canvas">
         <Scene
+          paused={Boolean(activePage)}
           scrollProgress={scroll.dive}
           buildupProgress={scroll.buildup}
           explosionProgress={scroll.explosion}
@@ -199,6 +216,34 @@ export default function App() {
         className="underwater-atmosphere"
         style={{ opacity: atmosphere }}
       />
+
+      {!activePage && (
+        <BlobCursor
+          className="home-blob-cursor"
+          material="chrome"
+          color="#16395d"
+          blend="normal"
+          size={48}
+          morph={0}
+          morphSpeed={0.95}
+          depth={1}
+          trail={16}
+          lag={0.55}
+          goo={1}
+          stretch={0.6}
+          wobble={1}
+          drip={0}
+          shine={1}
+          splash
+          splashCount={5}
+          splashSpeed={0.9}
+          splashSize={0.85}
+          splashGravity={0.25}
+          regrow={0.8}
+          shadow={false}
+          hideCursor
+        />
+      )}
 
       <div className="website-content">
         {/* ==================================
@@ -294,62 +339,31 @@ export default function App() {
           </div>
         </section>
 
-        {/* ==================================
-            PHASE 05 — SKILLS
-           ================================== */}
-
+        {/* WHAT I DO INTRO — the menu list was removed; keep this heading. */}
         <section
           className="page-section skills-section"
-          aria-label="Skills and expertise"
+          aria-label="What I do"
         >
           <div
             className="skills-content"
             style={{
               opacity: scroll.skillsReveal,
-
-              visibility:
-                scroll.skillsReveal <= 0
-                  ? "hidden"
-                  : "visible",
-
-              transform: `translate3d(
-                0,
-                ${(1 - scroll.skillsReveal) * 24}px,
-                0
-              )`,
+              visibility: scroll.skillsReveal <= 0 ? "hidden" : "visible",
+              transform: `translate3d(0, ${(1 - scroll.skillsReveal) * 24}px, 0)`,
             }}
           >
             <div className="skills-header">
               <span>03 / WHAT I DO</span>
-
               <h2>
                 Built with
                 <br />
                 <span>curiosity.</span>
               </h2>
-
               <p>
                 Blending development, design and
                 technology to make meaningful
                 digital experiences.
               </p>
-            </div>
-
-            <div className="skills-list">
-              <FlowingMenu
-                className="flowing-menu--skills"
-                ariaLabel="Skills and expertise"
-                textColor="#f5fbff"
-                marqueeBgColor="rgba(4, 31, 54, 0.94)"
-                marqueeTextColor="#d9f3ff"
-                speed={18}
-                items={[
-                  { index: "01", text: "Creative Development", showArrow: true, image: "/images/image1.png", imagePosition: "center 24%" },
-                  { index: "02", text: "3D Web Experiences", showArrow: true, image: "/images/image2.png", imagePosition: "center 42%" },
-                  { index: "03", text: "Interactive Design", showArrow: true, image: "/images/image3.png", imagePosition: "center 48%" },
-                  { index: "04", text: "Motion & Animation", showArrow: true, image: "/images/image4.png", imagePosition: "center 38%" },
-                ]}
-              />
             </div>
           </div>
         </section>
@@ -435,6 +449,7 @@ export default function App() {
           </div>
         </section>
       </div>
+      {activePage && <NavigationExperience page={activePage} />}
     </main>
   );
 }

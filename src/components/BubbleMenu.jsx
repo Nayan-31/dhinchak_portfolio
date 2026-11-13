@@ -18,6 +18,7 @@ export default function BubbleMenu({
   itemBg = "#344858",
   itemContentColor = "#edf8ff",
   itemHoverBg = "#17658b",
+  onNavigate,
   animationEase = "power3.out",
   animationDuration = 0.62,
   staggerDelay = 0.055,
@@ -137,6 +138,12 @@ export default function BubbleMenu({
   const handleItemClick = (event, item) => {
     setIsMenuOpen(false);
     toggleRef.current?.focus();
+    if (onNavigate) {
+      event.preventDefault();
+      pendingNavigationRef.current = null;
+      onNavigate(item);
+      return;
+    }
     const target = document.querySelector(item.href);
     if (target) {
       event.preventDefault();
