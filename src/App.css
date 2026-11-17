@@ -3,12 +3,56 @@
   box-sizing: border-box;
 }
 
+@font-face {
+  font-family: "Scalter";
+  src: url("/fonts/font2/Scalter-SerifCondensed.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Scalter Slanted";
+  src: url("/fonts/font2/Scalter-SerifCondSlant.otf") format("opentype");
+  font-style: italic;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Wild Youth";
+  src: url("/fonts/font4/WildYouth-Regular.otf") format("opentype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Casta";
+  src: url("/fonts/font3/Casta-Thin.otf") format("opentype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
 html,
 body,
 #root {
   margin: 0;
   width: 100%;
   min-height: 100%;
+}
+
+html {
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+html::-webkit-scrollbar,
+body::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
 }
 
 body {
@@ -35,6 +79,134 @@ body {
   height: 100dvh;
   overflow: hidden;
   pointer-events: none;
+}
+
+.swimmer-beam-overlay {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+
+.coral-one-overlay {
+  position: fixed;
+  z-index: 1;
+  right: -3vw;
+  bottom: 0;
+  height: min(65vh, 700px);
+  width: auto;
+  max-width: 32vw;
+  object-fit: contain;
+  object-position: right bottom;
+  pointer-events: none;
+  user-select: none;
+  will-change: transform, opacity;
+}
+
+.coral-left-generated-overlay {
+  position: fixed;
+  z-index: 1;
+  left: -3vw;
+  bottom: -6vh;
+  width: min(20vw, 360px);
+  height: auto;
+  pointer-events: none;
+  user-select: none;
+}
+
+.swimmer-beam-glow {
+  fill: #7fbaff;
+  opacity: 0.34;
+  filter: blur(17px);
+  mix-blend-mode: screen;
+}
+
+.swimmer-beam-core {
+  fill: #d8f2ff;
+  opacity: 0.46;
+  filter: blur(6px);
+  mix-blend-mode: screen;
+}
+
+.swimmer-overlay {
+  position: absolute;
+  z-index: 2;
+  top: 50%;
+  right: 0;
+  width: min(34vw, 500px);
+  height: auto;
+  transform: translateY(-50%);
+  opacity: 0;
+  pointer-events: none;
+  user-select: none;
+}
+
+.swimmer-overlay--enter {
+  will-change: transform, opacity;
+  animation: swimmer-enter 2.4s cubic-bezier(0.25, 0.1, 0.25, 1) both;
+}
+
+.swimmer-overlay--leave {
+  will-change: transform, opacity;
+  animation: swimmer-leave 2s cubic-bezier(0.45, 0, 0.75, 0.35) both;
+}
+
+@keyframes swimmer-enter {
+  0% {
+    opacity: 0;
+    transform: translate(110%, -50%);
+  }
+  16% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+}
+
+@keyframes swimmer-leave {
+  0% {
+    opacity: 1;
+    transform: translate(0, -50%);
+  }
+  18% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+    transform: translate(-430%, -50%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .swimmer-overlay--enter,
+  .swimmer-overlay--leave {
+    animation-duration: 1ms;
+  }
+}
+
+@media (max-width: 700px) {
+  .coral-one-overlay {
+    right: -3vw;
+    bottom: 0;
+    height: 54vh;
+    max-width: 36vw;
+  }
+
+  .coral-left-generated-overlay {
+    left: -4vw;
+    bottom: -5vh;
+    width: min(30vw, 280px);
+  }
+
+  .swimmer-overlay {
+    top: 56%;
+    width: min(52vw, 340px);
+  }
 }
 
 /* UNDERWATER ATMOSPHERE */
@@ -66,6 +238,19 @@ body {
   position: relative;
   z-index: 2;
   pointer-events: none;
+  font-family: "Scalter", Georgia, serif;
+}
+
+.website-content h1,
+.website-content h2,
+.website-content h3 {
+  font-family: "Wild Youth", Georgia, serif;
+}
+
+.website-content h1 span,
+.website-content h2 span {
+  font-family: "Wild Youth", Georgia, serif;
+  font-style: italic;
 }
 
 .page-section {
@@ -84,7 +269,7 @@ body {
   bottom: 32px;
   left: 50%;
   transform: translateX(-50%);
-  font-size: 11px;
+  font-size: 12px;
   letter-spacing: 3px;
   white-space: nowrap;
 }
@@ -111,7 +296,7 @@ body {
 }
 
 .section-copy h1 {
-  font-size: clamp(42px, 5.5vw, 78px);
+  font-size: clamp(46px, 5.8vw, 84px);
   letter-spacing: -0.055em;
   line-height: 1.03;
   margin: 24px 0;
@@ -121,7 +306,7 @@ body {
   max-width: 370px;
   color: #b3c7df;
   line-height: 1.8;
-  font-size: 15px;
+  font-size: 16px;
 }
 
 /* PHASE 04: CREATIVE INTRODUCTION */
@@ -191,7 +376,7 @@ body {
 .intro-title {
   margin: 0;
 
-  font-size: clamp(44px, 5.3vw, 84px);
+  font-size: clamp(48px, 5.6vw, 90px);
   font-weight: 700;
 
   line-height: 1.06;
@@ -214,7 +399,7 @@ body {
   margin: 28px 0 0;
 
   color: #b3c7df;
-  font-size: 15px;
+  font-size: 16px;
   line-height: 1.9;
 }
 
@@ -252,7 +437,7 @@ body {
   }
 
   .section-copy h1 {
-    font-size: clamp(38px, 11vw, 60px);
+    font-size: clamp(40px, 11.4vw, 64px);
   }
 
   .next-section {
@@ -281,13 +466,13 @@ body {
   }
 
   .intro-title {
-    font-size: clamp(39px, 10vw, 58px);
+    font-size: clamp(41px, 10.4vw, 62px);
     line-height: 1.08;
   }
 
   .intro-description {
     max-width: 290px;
-    font-size: 13px;
+    font-size: 14px;
     line-height: 1.75;
     margin-top: 20px;
   }
@@ -723,7 +908,7 @@ body {
   }
 
   .skills-header h2 {
-    font-size: clamp(38px, 10vw, 58px);
+    font-size: clamp(40px, 10.3vw, 61px);
   }
 
   .skills-header p {
@@ -788,7 +973,7 @@ body {
 .skills-header h2 {
   margin: 0 0 26px;
 
-  font-size: clamp(42px, 4.5vw, 68px);
+  font-size: clamp(46px, 4.8vw, 74px);
   line-height: 1.06;
   letter-spacing: -0.055em;
 }
@@ -802,7 +987,7 @@ body {
   margin: 0;
 
   color: #b3c7df;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.8;
 }
 
@@ -898,7 +1083,7 @@ body {
 
   .skills-header p {
     max-width: 290px;
-    font-size: 13px;
+    font-size: 14px;
   }
 
   .skills-list {
@@ -990,7 +1175,7 @@ body {
 .buildup-content h2 {
   margin: 22px 0 20px;
 
-  font-size: clamp(38px, 4.2vw, 64px);
+  font-size: clamp(42px, 4.5vw, 70px);
   line-height: 1.08;
   letter-spacing: -0.055em;
 }
@@ -1000,9 +1185,11 @@ body {
 }
 
 .buildup-content p {
-  max-width: 340px;
+  max-width: 100%;
+  margin: 0;
+  text-align: left;
   color: #b3c7df;
-  font-size: 14px;
+  font-size: 15px;
   line-height: 1.8;
 }
 
@@ -1016,6 +1203,92 @@ body {
   }
 
   .buildup-content h2 {
-    font-size: clamp(32px, 8vw, 48px);
+    font-size: clamp(34px, 8.3vw, 50px);
+  }
+}
+
+/* Home typography: a little more presence while keeping the same type pairing. */
+.website-content {
+  font-weight: 600;
+  letter-spacing: 0.035em;
+}
+
+.website-content h1,
+.website-content h2,
+.website-content h3 {
+  font-weight: 700;
+  letter-spacing: 0.045em;
+  -webkit-text-stroke: 0.3px currentColor;
+}
+
+.section-copy h1 {
+  font-size: clamp(48px, 6vw, 88px);
+}
+
+.intro-title {
+  font-size: clamp(50px, 5.8vw, 94px);
+}
+
+.skills-header h2 {
+  font-size: clamp(48px, 5vw, 82px);
+}
+
+.buildup-content h2 {
+  font-size: clamp(44px, 4.7vw, 74px);
+}
+
+.explosion-copy h2 {
+  font-size: clamp(42px, 5.3vw, 78px);
+}
+
+.section-copy p,
+.intro-description,
+.skills-header p,
+.buildup-content p,
+.explosion-copy p {
+  font-size: 16px;
+}
+
+.website-content h1,
+.website-content h2,
+.website-content h3 {
+  letter-spacing: 0.015em;
+}
+
+.website-content p {
+  font-family: "Casta", Georgia, serif;
+  color: #e7f2ff;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-shadow: 0 0 18px rgba(190, 225, 255, 0.2);
+}
+
+@media (max-width: 700px) {
+  .section-copy h1 {
+    font-size: clamp(42px, 11.8vw, 68px);
+  }
+
+  .intro-title {
+    font-size: clamp(44px, 10.8vw, 66px);
+  }
+
+  .skills-header h2 {
+    font-size: clamp(42px, 10.8vw, 64px);
+  }
+
+  .buildup-content h2 {
+    font-size: clamp(38px, 8.8vw, 54px);
+  }
+
+  .explosion-copy h2 {
+    font-size: clamp(38px, 9.5vw, 58px);
+  }
+
+  .section-copy p,
+  .intro-description,
+  .skills-header p,
+  .buildup-content p,
+  .explosion-copy p {
+    font-size: 15px;
   }
 }

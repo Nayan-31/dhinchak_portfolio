@@ -1,9 +1,11 @@
 
-import { useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
+import Lenis from "lenis";
 import Scene from "./three/Scene";
 import BubbleMenu from "./components/BubbleMenu";
 import BlobCursor from "./components/BlobCursor";
 import NavigationExperience from "./components/NavigationExperience";
+import "lenis/dist/lenis.css";
 import "./App.css";
 
 const clamp = (v) => Math.min(1, Math.max(0, v));
@@ -54,6 +56,9 @@ const navigationItems = [
 export default function App() {
   const introSectionRef = useRef(null);
   const introContentRef = useRef(null);
+  const swimmerRef = useRef(null);
+  const swimmerBeamRef = useRef(null);
+  const lenisRef = useRef(null);
   const [activePage, setActivePage] = useState(null);
 
   const [scroll, setScroll] = useState({
@@ -64,6 +69,32 @@ export default function App() {
     buildup: 0,
     explosion: 0,
   });
+
+  const scrollToTop = useCallback(() => {
+    if (lenisRef.current) {
+      lenisRef.current.scrollTo("top", { duration: 1.1 });
+    } else {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+    }
+  }, []);
+
+  useEffect(() => {
+    const reduceMotion = window.matchMedia(
+      "(prefers-reduced-motion: reduce)",
+    ).matches;
+    const lenis = new Lenis({
+      autoRaf: true,
+      lerp: 0.08,
+      smoothWheel: !reduceMotion,
+      allowNestedScroll: true,
+    });
+    lenisRef.current = lenis;
+
+    return () => {
+      lenis.destroy();
+      lenisRef.current = null;
+    };
+  }, []);
 
   useEffect(() => {
     let frame = null;
@@ -154,13 +185,13 @@ export default function App() {
       const page = matchingItem?.label;
       setActivePage(page && page !== "home" ? page : null);
       if (!page || page === "home") {
-        window.scrollTo({ top: 0, behavior: "smooth" });
+        scrollToTop();
       }
     };
 
     window.addEventListener("popstate", restorePageFromHistory);
     return () => window.removeEventListener("popstate", restorePageFromHistory);
-  }, []);
+  }, [scrollToTop]);
 
   const atmosphere = smoothstep(scroll.dive, 0.02, 0.5);
 
@@ -175,12 +206,18 @@ export default function App() {
     0.05,
     0.35
   );
+  const coralTwoReveal = smoothstep(scroll.skillsReveal, 0.76, 0.9);
+  const swimmerAcquisition = smoothstep(
+    smoothstep(scroll.buildup, 0.05, 0.95),
+    0.04,
+    0.5
+  );
 
   const navigateTo = (item) => {
     if (item.label === "home") {
       setActivePage(null);
       window.history.pushState(null, "", item.href);
-      window.scrollTo({ top: 0, behavior: "smooth" });
+      scrollToTop();
       return;
     }
 
@@ -208,7 +245,56 @@ export default function App() {
           scrollProgress={scroll.dive}
           buildupProgress={scroll.buildup}
           explosionProgress={scroll.explosion}
+          swimmerRef={swimmerRef}
+          swimmerBeamRef={swimmerBeamRef}
         />
+        {!activePage && (
+          <>
+            <img
+              className="coral-one-overlay"
+              src="/extras/coral-right-blue-white.png"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              style={{
+                opacity: smoothstep(scroll.dive, 0.28, 0.38),
+                transform: "translate3d(0, 0, 0)",
+              }}
+            />
+            <img
+              className="coral-left-generated-overlay"
+              src="/extras/coral-left-blue-white.png"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+              style={{
+                opacity: coralTwoReveal,
+                transition: "opacity 900ms ease",
+                transform: "scaleX(-1)",
+              }}
+            />
+            <svg className="swimmer-beam-overlay" aria-hidden="true">
+              <g ref={swimmerBeamRef}>
+                <polygon className="swimmer-beam-glow" />
+                <polygon className="swimmer-beam-core" />
+              </g>
+            </svg>
+            <img
+              ref={swimmerRef}
+              className={`swimmer-overlay${
+                swimmerAcquisition > 0.02
+                  ? " swimmer-overlay--leave"
+                  : scroll.dive >= 0.38
+                    ? " swimmer-overlay--enter"
+                    : ""
+              }`}
+              src="/extras/diver-swimming.webp"
+              alt=""
+              aria-hidden="true"
+              draggable={false}
+            />
+          </>
+        )}
       </div>
 
       {/* EXISTING UNDERWATER ATMOSPHERE */}

@@ -9,12 +9,15 @@ import Lighting from "./Lighting";
 import Effects from "./Effects";
 import CameraRig from "./CameraRig";
 import UnderwaterEnvironment from "./UnderwaterEnvironment";
+import DiverBeamTarget from "./DiverBeamTarget";
 
 export default function Scene({
   paused = false,
   scrollProgress = 0,
   buildupProgress = 0,
   explosionProgress = 0,
+  swimmerRef,
+  swimmerBeamRef,
 }) {
   return (
     <Canvas
@@ -35,6 +38,13 @@ export default function Scene({
 
       <CameraRig
         scrollProgress={scrollProgress}
+      />
+
+      <DiverBeamTarget
+        scrollProgress={scrollProgress}
+        buildupProgress={buildupProgress}
+        swimmerRef={swimmerRef}
+        beamRef={swimmerBeamRef}
       />
 
       <Lighting />
