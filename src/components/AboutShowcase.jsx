@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { capabilities, craftTools, proofProjects } from "../data/aboutShowcase";
+import { capabilities, craftTools, profile, proofProjects } from "../data/aboutShowcase";
 import "./AboutShowcase.css";
 
 const projectFor = (id) => proofProjects.find((project) => project.id === id);
@@ -9,6 +9,31 @@ export default function AboutShowcase() {
 
   return (
     <div className="about-showcase" role="region" aria-label="About and capabilities">
+      <section className="about-profile" aria-labelledby="about-profile-title">
+        <div className="about-profile__copy">
+          <div className="about-showcase__eyebrow">A LITTLE ABOUT ME</div>
+          <h2 id="about-profile-title">
+            Designing with intent.
+            <span> Building with curiosity.</span>
+          </h2>
+          <p className="about-profile__intro">{profile.introduction}</p>
+          <div className="about-profile__identity">
+            <span className="about-profile__name">{profile.name}</span>
+            <span className="about-profile__role">{profile.role}</span>
+          </div>
+          <ul className="about-profile__focus" aria-label="Areas of focus">
+            {profile.focus.map((item) => <li key={item}>{item}</li>)}
+          </ul>
+        </div>
+        <figure className="about-profile__portrait">
+          <img src={profile.portrait} alt={profile.portraitAlt} />
+          <figcaption>
+            <span>THE PERSON BEHIND THE PIXELS</span>
+            <span aria-hidden="true">↗</span>
+          </figcaption>
+        </figure>
+      </section>
+
       <section className="about-showcase__section" aria-labelledby="what-i-do-title">
         <div className="about-showcase__eyebrow">01 / CAPABILITIES</div>
         <div className="about-showcase__section-heading">

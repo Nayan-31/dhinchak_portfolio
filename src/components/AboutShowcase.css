@@ -1,10 +1,153 @@
+@font-face {
+  font-family: "About Coffekan";
+  src: url("/fonts/font1/CoffekanRegular.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 400;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "About Kenoky";
+  src: url("/fonts/font1/KenokyLight.ttf") format("truetype");
+  font-style: normal;
+  font-weight: 300;
+  font-display: swap;
+}
+
 .about-showcase {
   position: relative;
   z-index: 2;
-  width: min(1160px, 100%);
+  width: min(1540px, 100%);
   margin: 0 auto;
-  padding: clamp(540px, 72vh, 760px) clamp(24px, 7vw, 104px) 48px;
+  padding: clamp(330px, 43vh, 470px) clamp(24px, 5vw, 88px) 56px;
   color: #eef6ff;
+  font-family: "About Kenoky", Arial, sans-serif;
+  font-weight: 400;
+  -webkit-text-stroke: 0.3px currentColor;
+  text-shadow: 0 0 0.25px currentColor;
+}
+
+.about-showcase h2,
+.about-showcase h3 {
+  font-family: "About Coffekan", "About Kenoky", Arial, sans-serif;
+  font-weight: 600;
+  -webkit-text-stroke: 0.85px currentColor;
+}
+
+.about-profile {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(400px, 0.9fr);
+  align-items: center;
+  gap: clamp(34px, 7vw, 108px);
+  padding: 0 0 clamp(70px, 9vw, 120px);
+}
+
+.about-profile__copy {
+  max-width: 670px;
+}
+
+.about-profile__copy h2 {
+  max-width: 650px;
+  margin: 22px 0 24px;
+  color: #f5f9ff;
+  font-size: clamp(42px, 6.2vw, 78px);
+  font-weight: 600;
+  -webkit-text-stroke: 1px currentColor;
+  letter-spacing: -0.075em;
+  line-height: 0.98;
+  text-wrap: balance;
+}
+
+.about-profile__copy h2 span {
+  display: block;
+  color: #9bd8fa;
+}
+
+.about-profile__intro {
+  max-width: 570px;
+  margin: 0;
+  color: rgba(228, 239, 250, 0.88);
+  font-size: clamp(15px, 1.35vw, 18px);
+  line-height: 1.8;
+}
+
+.about-profile__identity {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: baseline;
+  gap: 8px 16px;
+  margin-top: 32px;
+}
+
+.about-profile__name {
+  color: #f5f9ff;
+  font-size: 17px;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+}
+
+.about-profile__role {
+  color: rgba(200, 221, 238, 0.72);
+  font-size: 13px;
+}
+
+.about-profile__focus {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  margin: 22px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.about-profile__focus li {
+  padding: 8px 11px;
+  border: 1px solid rgba(180, 214, 240, 0.25);
+  border-radius: 2px;
+  color: rgba(223, 239, 252, 0.84);
+  font-size: 11px;
+  letter-spacing: 0.025em;
+  background: rgba(3, 14, 28, 0.32);
+}
+
+.about-profile__portrait {
+  position: relative;
+  width: 100%;
+  max-width: 560px;
+  justify-self: end;
+  margin: 0;
+  padding: 8px;
+  border: 1px solid rgba(190, 224, 247, 0.35);
+  background: linear-gradient(145deg, rgba(187, 224, 248, 0.14), rgba(1, 10, 23, 0.7));
+  box-shadow: 0 28px 80px rgba(0, 5, 16, 0.35);
+  transform: rotate(1deg);
+  transition: transform 500ms cubic-bezier(0.2, 0.7, 0.2, 1), border-color 300ms ease;
+}
+
+.about-profile__portrait img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 0.78;
+  object-fit: cover;
+  object-position: center 50%;
+  filter: saturate(0.82) contrast(1.04);
+}
+
+.about-profile__portrait figcaption {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 12px;
+  min-height: 42px;
+  padding: 8px 5px 0;
+  color: rgba(208, 231, 248, 0.76);
+  font-size: 9px;
+  letter-spacing: 0.17em;
+}
+
+.about-profile__portrait figcaption span:last-child {
+  color: #9bd8fa;
+  font-size: 17px;
 }
 
 .about-showcase__section {
@@ -32,7 +175,7 @@
 
 .about-showcase__section-heading h2 {
   margin: 0;
-  font-size: clamp(36px, 6vw, 72px);
+  font-size: clamp(40px, 6.5vw, 82px);
   font-weight: 500;
   letter-spacing: -0.065em;
   line-height: 0.98;
@@ -65,8 +208,8 @@
   grid-template-columns: 56px minmax(0, 1fr) 40px;
   align-items: center;
   width: 100%;
-  min-height: 98px;
-  padding: 20px 18px 20px 4px;
+  min-height: 116px;
+  padding: 24px 22px 24px 4px;
   border: 0;
   color: inherit;
   background: transparent;
@@ -82,8 +225,9 @@
 }
 
 .capability__title {
-  font-size: clamp(23px, 3.4vw, 40px);
-  font-weight: 400;
+  font-size: clamp(25px, 3.7vw, 46px);
+  font-weight: 600;
+  -webkit-text-stroke: 0.55px currentColor;
   letter-spacing: -0.045em;
   transition: color 220ms ease, transform 300ms cubic-bezier(0.2, 0.7, 0.2, 1);
 }
@@ -183,11 +327,11 @@
   grid-template-columns: 32px minmax(0, 1fr) 20px;
   align-items: center;
   gap: 10px;
-  min-height: 82px;
-  padding: 14px 12px 14px 0;
+  min-height: 96px;
+  padding: 17px 14px 17px 0;
   border-bottom: 1px solid rgba(184, 219, 246, 0.24);
   color: #ecf5ff;
-  font-size: clamp(15px, 2vw, 20px);
+  font-size: clamp(17px, 2.15vw, 23px);
   transition: color 220ms ease, background-color 220ms ease;
 }
 
@@ -229,7 +373,7 @@
   grid-template-columns: 56px minmax(0, 1fr) 48px;
   gap: 16px;
   align-items: start;
-  padding: 28px 8px 32px 4px;
+  padding: 34px 10px 38px 4px;
   border-bottom: 1px solid rgba(184, 219, 246, 0.24);
   background: rgba(2, 14, 30, 0.3);
   transition: background-color 240ms ease, padding 240ms ease;
@@ -282,7 +426,32 @@
 
 @media (max-width: 700px) {
   .about-showcase {
-    padding: 68vh 20px 28px;
+    padding: 250px 20px 28px;
+  }
+
+  .about-profile {
+    grid-template-columns: 1fr;
+    gap: 30px;
+    padding-bottom: 66px;
+  }
+
+  .about-profile__copy h2 {
+    margin-top: 17px;
+    font-size: clamp(42px, 12vw, 62px);
+  }
+
+  .about-profile__intro {
+    font-size: 14px;
+  }
+
+  .about-profile__identity {
+    margin-top: 22px;
+  }
+
+  .about-profile__portrait {
+    width: min(100%, 500px);
+    justify-self: start;
+    transform: none;
   }
 
   .about-showcase__section {
@@ -301,12 +470,12 @@
 
   .capability__trigger {
     grid-template-columns: 38px minmax(0, 1fr) 28px;
-    min-height: 78px;
-    padding-right: 8px;
+    min-height: 88px;
+    padding: 20px 8px 20px 4px;
   }
 
   .capability__title {
-    font-size: clamp(21px, 6vw, 30px);
+    font-size: clamp(23px, 6.4vw, 34px);
   }
 
   .capability__details {
@@ -324,6 +493,11 @@
 
   .craft-tools {
     grid-template-columns: repeat(2, minmax(0, 1fr));
+  }
+
+  .craft-tool {
+    min-height: 86px;
+    font-size: clamp(16px, 4.2vw, 20px);
   }
 
   .craft-tool:nth-child(3n + 2),
@@ -345,6 +519,7 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .about-profile__portrait,
   .capability,
   .capability__title,
   .capability__icon,

@@ -1,3 +1,13 @@
+export const profile = {
+  name: "Nayan Mahato",
+  role: "Creative developer",
+  introduction:
+    "I build thoughtful digital experiences that bring together frontend development, interactive design and 3D. I enjoy turning ambitious ideas into clear, responsive work for the web.",
+  portrait: "/images/IMG_20261113_202346.jpg",
+  portraitAlt: "Nayan Mahato, creative developer",
+  focus: ["Frontend development", "Interactive 3D", "Digital experiences"],
+};
+
 export const capabilities = [
   {
     number: "01",
